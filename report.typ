@@ -8,8 +8,14 @@ Fashion MNIST 数据集包含 10 个类别的服装图片，如T恤/上衣、裤
 
 Fashion MNIST 数据集的使用非常广泛，适合入门级的机器学习项目，是理解图像分类任务的一个很好的起点。同时，由于其相对简单但又比数字识别更接近实际应用，因此也适用于更高级的机器学习和深度学习课程和研究。
 
-== 模型介绍
+== 模型架构
 
+#figure(
+  image("./figs/model_MLP.drawio.svg", width: 40%),
+  caption: [
+    Architecture of the Multi-Layer Perceptron
+  ],
+)
 
 == 实现细节
 repo 地址 #link("https://github.com/Try2beby/MLP_numpy")[here]
