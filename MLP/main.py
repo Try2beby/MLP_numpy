@@ -64,3 +64,56 @@ class ThreeLayerNet(Module):
         plt.savefig("figs/weight_layers.svg")
 
         plt.show()
+
+    def visualize_weights(self, if_first_layer=True):
+        # import matplotlib.pyplot as plt
+        # import numpy as np
+        import math
+
+        if if_first_layer:
+            # Get the weights of the first layer
+            weights = self.layers[0].params[0]
+        else:
+            weights = self.layers[2].params[0]
+
+        # Get the number of neurons in the first layer
+        num_neurons = weights.shape[1]
+        sqrt_pixels = int(math.sqrt(weights.shape[0]))
+
+        # Calculate the number of rows and columns for the grid
+        grid_size = math.isqrt(num_neurons)
+        if grid_size * grid_size < num_neurons:
+            grid_size += 1
+
+        # Create a new figure with a grid layout
+        fig, axs = plt.subplots(
+            grid_size, grid_size, figsize=(grid_size * 0.6, grid_size * 0.6)
+        )
+
+        for i in range(grid_size * grid_size):
+            ax = axs[i // grid_size, i % grid_size]
+
+            if i < num_neurons:
+                # Reshape the weights of the i-th neuron to be 28x28
+                neuron_weights = weights[:, i].reshape(sqrt_pixels, sqrt_pixels)
+
+                # Display the weights of the i-th neuron as an image
+                ax.imshow(neuron_weights, cmap="gray")
+
+                # Add a title
+                # ax.set_title(f"Neuron {i+1}")
+            else:
+                # Hide the axes for the extra subplots
+                ax.axis("off")
+
+            # Remove the axis labels
+            ax.axis("off")
+
+        # save
+        if if_first_layer:
+            plt.savefig("figs/weight_layer1.svg")
+        else:
+            plt.savefig("figs/weight_layer2.svg")
+
+        # Show the figure
+        plt.show()
