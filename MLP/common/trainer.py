@@ -154,7 +154,7 @@ class Trainer:
         self.best_macro_micro_avg = best_macro_micro_avg
         self.save_best_metrics()
 
-    def plot(self):
+    def plot(self, save=False):
         from matplotlib.ticker import MaxNLocator
 
         epochs = range(1, len(self.accuracy["train"]) + 1)
@@ -195,6 +195,10 @@ class Trainer:
 
         fig.tight_layout()  # otherwise the right y-label is slightly clipped
         fig.legend(loc="upper left")
+
+        if save:
+            # save with timestamp
+            plt.savefig("figs/" + time.strftime("%Y%m%d-%H%M%S") + "_plot.svg")
         plt.show()
 
 

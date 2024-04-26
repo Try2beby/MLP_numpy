@@ -2,6 +2,8 @@ from .common.np import *
 from .common.layers import Affine, Sigmoid, ReLU, SoftmaxWithLoss
 from .common.module import Module
 
+import matplotlib.pyplot as plt
+
 
 class ThreeLayerNet(Module):
     def __init__(self, input_size, hidden_size1, hidden_size2, output_size, std=1e-4):
@@ -40,3 +42,25 @@ class ThreeLayerNet(Module):
         for layer in reversed(self.layers):
             dout = layer.backward(dout)
         return dout
+
+    def plot_weights(self):
+        # count the number of Affine layers
+        num_affine = sum(isinstance(layer, Affine) for layer in self.layers)
+        idx = 0
+
+        plt.figure(figsize=(num_affine * 2, 6))
+
+        # plot weight matrix
+        for layer in self.layers:
+            if isinstance(layer, Affine):
+                plt.subplot(1, num_affine, idx + 1)
+                plt.imshow(np.abs(layer.params[0]))
+                idx += 1
+
+        # add colorbar to the figure
+        plt.colorbar()
+
+        # save image
+        plt.savefig("figs/weight_layers.svg")
+
+        plt.show()
